@@ -10,16 +10,3 @@ CREATE TABLE USER (
 );
 
 
-INSERT INTO USER VALUES (
-  1,'test1', 'test1@test.com', 'test1', 'F','1990-01-01'
-);
-
-
-#jsonForCreating
-{
-"name":"xiao test",
-"email":"xiao@test.com",
-"password":"xiao1",
-"gender":"F",
-"birth":"1990-01-06"
-}

@@ -1,7 +1,7 @@
 -- Create user table
 DROP TABLE IF EXISTS USER;
 CREATE TABLE USER (
-  USERID INTEGER(64) NOT NULL PRIMARY KEY,
+  USER_ID INTEGER AUTO_INCREMENT PRIMARY KEY,
   NAME VARCHAR(64) NOT NULL,
   EMAIL VARCHAR(100) NOT NULL,
   PASSWORD VARCHAR(20) NOT NULL,
@@ -11,11 +11,12 @@ CREATE TABLE USER (
 
 
 INSERT INTO USER VALUES (
-  1,"test1", "test1@test.com", "test1", "F","1990-01-01"
+  1,'test1', 'test1@test.com', 'test1', 'F','1990-01-01'
 );
 
+
+#jsonForCreating
 {
-"userId":5,
 "name":"xiao test",
 "email":"xiao@test.com",
 "password":"xiao1",

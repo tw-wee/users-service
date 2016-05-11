@@ -2,7 +2,6 @@ package tw.wee.user.entity;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
-import tw.wee.user.enumeration.Gender;
 
 import javax.persistence.*;
 
@@ -10,8 +9,8 @@ import javax.persistence.*;
 @Table(name = "USER")
 public class UserProfile {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "USERID", length = 10)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "USER_ID", length = 10)
     private Integer userId;
 
     @Column(name = "NAME", length = 255, nullable = false)
@@ -28,12 +27,12 @@ public class UserProfile {
     private LocalDate birth;
 
     @Column(name = "GENDER")
-    private Gender gender;
+    private String gender;
 
     public UserProfile() {
     }
 
-    public UserProfile(Integer userId, String name, String email, String password, LocalDate birth, Gender gender) {
+    public UserProfile(Integer userId, String name, String email, String password, LocalDate birth, String gender) {
         this.userId = userId;
         this.name = name;
         this.email = email;
@@ -66,11 +65,11 @@ public class UserProfile {
         this.birth = birth;
     }
 
-    public Gender getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

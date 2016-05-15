@@ -6,7 +6,7 @@ import org.joda.time.LocalDate;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "TABLE_USER")
 public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,12 @@ public class UserProfile {
 
     @Column(name = "GENDER")
     private String gender;
+
+    @Column(name = "MOBILE_NUMBER")
+    private String mobile;
+
+    @Column(name = "DISACTIVE_FLAG")
+    private Character disacitveIndicator;
 
     public UserProfile() {
     }
@@ -87,5 +93,21 @@ public class UserProfile {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public Character getDisacitveIndicator() {
+        return disacitveIndicator;
+    }
+
+    public void setDisacitveIndicator(Character disacitveIndicator) {
+        this.disacitveIndicator = disacitveIndicator;
     }
 }

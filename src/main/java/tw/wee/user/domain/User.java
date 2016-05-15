@@ -27,6 +27,10 @@ public class User {
     private LocalDate birth;
     private Gender gender;
 
+    private String mobile;
+
+    private Boolean disactiveIndicator;
+
     public User() {
     }
 
@@ -82,5 +86,21 @@ public class User {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public Boolean getDisactiveIndicator() {
+        return disactiveIndicator;
+    }
+
+    public void setDisactiveIndicator(Boolean disactiveIndicator) {
+        this.disactiveIndicator = disactiveIndicator;
     }
 }

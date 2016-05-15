@@ -8,4 +8,7 @@ import tw.wee.user.entity.UserProfile;
 public interface UserRepository extends CrudRepository<UserProfile, Integer> {
     UserProfile findByUserId(Integer id);
     UserProfile save(UserProfile user);
+
+    UserProfile findByName(String name);
+
 }

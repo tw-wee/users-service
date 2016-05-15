@@ -14,6 +14,8 @@ public class UserTranslator {
         userProfile.setBirth(user.getBirth());
         userProfile.setGender(user.getGender().getValue());
         userProfile.setPassword(user.getPassword());
+        userProfile.setMobile(user.getMobile());
+        userProfile.setDisacitveIndicator(user.getDisactiveIndicator() == null || true ? 'A' : 'D');
         return userProfile;
     }
 
@@ -24,6 +26,14 @@ public class UserTranslator {
         user.setBirth(createdUser.getBirth());
         user.setGender(Gender.getGender(createdUser.getGender()));
         user.setEmail(createdUser.getEmail());
+        user.setMobile(createdUser.getMobile());
+        user.setDisactiveIndicator(getIndicator(createdUser.getDisacitveIndicator()));
         return user;
+    }
+
+    private Boolean getIndicator(Character indicator) {
+        if (indicator.equals('A')) {
+            return true;
+        } else return false;
     }
 }

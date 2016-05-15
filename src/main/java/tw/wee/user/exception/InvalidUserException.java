@@ -10,4 +10,8 @@ public class InvalidUserException extends RuntimeException {
         super(msg);
         this.bindingResult = bindingResult;
     }
+
+    public BindingResult getBindingResult() {
+        return bindingResult;
+    }
 }

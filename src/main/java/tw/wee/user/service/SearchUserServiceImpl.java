@@ -11,8 +11,11 @@ import tw.wee.user.translator.UserTranslator;
 
 import javax.transaction.Transactional;
 
+import java.security.InvalidParameterException;
+
 import static java.lang.String.format;
-import static tw.wee.user.Utils.ErrorMessage.USER_NOT_FOUND_ERROR_MESSAGE;
+import static tw.wee.user.Utils.ErrorMessage.USER_NOT_FOUND_BY_ID_ERROR_MESSAGE;
+import static tw.wee.user.Utils.ErrorMessage.USER_NOT_FOUND_BY_PARAMS_ERROR_MESSAGE;
 
 @Service
 @Transactional
@@ -28,17 +31,34 @@ public class SearchUserServiceImpl implements SearchUserService {
     public User findById(Integer id) {
         UserProfile byUserId = userRespository.findByUserId(id);
         if (byUserId == null) {
-            throw new UserNotExistException(format(USER_NOT_FOUND_ERROR_MESSAGE,id));
+            throw new UserNotExistException(format(USER_NOT_FOUND_BY_ID_ERROR_MESSAGE,id));
         }
         return userTranslator.translateToDomain(byUserId);
     }
 
     @Override
-    public User findByParams(String name, String email, String tel) {
-        UserProfile profile = null;
+    public User findByParams(String name, String email, String mobile) {
         if(name != null){
-             profile = userRespository.findByName(name);
+            UserProfile user = userRespository.findByName(name);
+            handleUserNotFound(user);
+            return userTranslator.translateToDomain(user);
         }
-        return userTranslator.translateToDomain(profile);
+        if(email !=null){
+            UserProfile user = userRespository.findByEmail(email);
+            handleUserNotFound(user);
+            return userTranslator.translateToDomain(user);
+        }
+        if (mobile != null){
+            UserProfile user = userRespository.findByMobile(mobile);
+            handleUserNotFound(user);
+            return userTranslator.translateToDomain(user);
+        }
+        throw new InvalidParameterException("Insufficient search parameters");
+    }
+
+    private void handleUserNotFound(UserProfile user) {
+        if(user ==null){
+            throw new UserNotExistException(format(USER_NOT_FOUND_BY_PARAMS_ERROR_MESSAGE));
+        }
     }
 }

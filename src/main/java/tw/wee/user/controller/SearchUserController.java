@@ -6,14 +6,13 @@ import io.swagger.annotations.ApiParam;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import tw.wee.user.domain.User;
 import tw.wee.user.service.SearchUserService;
 
 import javax.validation.Valid;
+import java.security.InvalidParameterException;
 
 import static org.springframework.http.HttpStatus.OK;
 
@@ -32,15 +31,21 @@ public class SearchUserController {
         User responseUser = searchUserService.findById(userId);
         return new ResponseEntity<>(responseUser, OK);
     }
-    
-    @RequestMapping(method = RequestMethod.GET)
-    @ApiOperation(value = "Retrieve user", notes = "Get User")
-    public ResponseEntity findCustomer(@PathVariable @Valid @ApiParam(value = "name") String name,
-                                       @PathVariable @Valid @ApiParam(value = "email") String email,
-                                       @PathVariable @Valid @ApiParam(value = "tel") String tel) {
 
-        User responseUser = searchUserService.findByParams(name, email, tel);
+    @RequestMapping(method = RequestMethod.GET)
+    @ApiOperation(value = "Find user", notes = "Find User")
+    public ResponseEntity findCustomer(@RequestParam (required = false) @ApiParam(value = "name") String name,
+                                       @RequestParam (required = false) @Valid @ApiParam(value = "email") String email,
+                                       @RequestParam (required = false) @Valid @ApiParam(value = "mobile") String mobile,
+                                       BindingResult bindingResult) {
+        rejectInvalidUser(bindingResult);
+        User responseUser = searchUserService.findByParams(name, email, mobile);
         return new ResponseEntity<>(responseUser, OK);
     }
 
+    private void rejectInvalidUser(BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            throw new InvalidParameterException("Invalid parameters:"+  bindingResult.getFieldErrors());
+        }
+    }
 }

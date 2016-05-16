@@ -9,6 +9,8 @@ import org.joda.time.LocalDate;
 import tw.wee.user.enumeration.Gender;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY;
 
@@ -26,7 +28,7 @@ public class User {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate birth;
     private Gender gender;
-
+    @Max(value = 11)@Min(value = 11)
     private String mobile;
 
     private Boolean disactiveIndicator;

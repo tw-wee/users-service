@@ -29,11 +29,11 @@ public class SearchUserServiceImpl implements SearchUserService {
 
     @Override
     public User findById(Integer id) {
-        UserProfile byUserId = userRespository.findByUserId(id);
-        if (byUserId == null) {
+        UserProfile user = userRespository.findByUserId(id);
+        if (user == null) {
             throw new UserNotExistException(format(USER_NOT_FOUND_BY_ID_ERROR_MESSAGE,id));
         }
-        return userTranslator.translateToDomain(byUserId);
+        return userTranslator.translateToDomain(user);
     }
 
     @Override

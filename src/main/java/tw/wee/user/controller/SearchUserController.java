@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import tw.wee.user.domain.User;
 import tw.wee.user.service.SearchUserService;
 
-import javax.validation.Valid;
 import java.security.InvalidParameterException;
 
 import static org.springframework.http.HttpStatus.OK;
@@ -35,10 +34,8 @@ public class SearchUserController {
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "Find user", notes = "Find User")
     public ResponseEntity findCustomer(@RequestParam (required = false) @ApiParam(value = "name") String name,
-                                       @RequestParam (required = false) @Valid @ApiParam(value = "email") String email,
-                                       @RequestParam (required = false) @Valid @ApiParam(value = "mobile") String mobile,
-                                       BindingResult bindingResult) {
-        rejectInvalidUser(bindingResult);
+                                       @RequestParam (required = false) @ApiParam(value = "email") String email,
+                                       @RequestParam (required = false) @ApiParam(value = "mobile") String mobile) {
         User responseUser = searchUserService.findByParams(name, email, mobile);
         return new ResponseEntity<>(responseUser, OK);
     }

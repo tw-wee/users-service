@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import tw.wee.user.domain.User;
 import tw.wee.user.entity.UserProfile;
 import tw.wee.user.enumeration.Gender;
+import tw.wee.user.enumeration.RoleType;
 
 @Component
 public class UserTranslator {
@@ -16,6 +17,7 @@ public class UserTranslator {
         userProfile.setPassword(user.getPassword());
         userProfile.setMobile(user.getMobile());
         userProfile.setDisacitveIndicator(user.getDisactiveIndicator() == null || true ? 'A' : 'D');
+        userProfile.setRole(user.getRole().getValue());
         return userProfile;
     }
 
@@ -28,6 +30,7 @@ public class UserTranslator {
         user.setEmail(createdUser.getEmail());
         user.setMobile(createdUser.getMobile());
         user.setDisactiveIndicator(getIndicator(createdUser.getDisacitveIndicator()));
+        user.setRole(RoleType.getRole(createdUser.getRole()));
         return user;
     }
 

@@ -5,17 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tw.wee.user.domain.User;
 import tw.wee.user.entity.UserProfile;
+import tw.wee.user.exception.PasswordValidationExpection;
 import tw.wee.user.exception.UserNotExistException;
 import tw.wee.user.repository.UserRepository;
 import tw.wee.user.translator.UserTranslator;
 
 import javax.transaction.Transactional;
-
 import java.security.InvalidParameterException;
 
 import static java.lang.String.format;
-import static tw.wee.user.Utils.ErrorMessage.USER_NOT_FOUND_BY_ID_ERROR_MESSAGE;
-import static tw.wee.user.Utils.ErrorMessage.USER_NOT_FOUND_BY_PARAMS_ERROR_MESSAGE;
+import static tw.wee.user.Utils.ErrorMessage.USER_NOT_FOUND_ERROR_MESSAGE;
 
 @Service
 @Transactional
@@ -30,8 +29,16 @@ public class SearchUserServiceImpl implements SearchUserService {
     @Override
     public User findById(Integer id) {
         UserProfile user = userRespository.findByUserId(id);
-        if (user == null) {
-            throw new UserNotExistException(format(USER_NOT_FOUND_BY_ID_ERROR_MESSAGE,id));
+        handleUserNotFound(user);
+        return userTranslator.translateToDomain(user);
+    }
+
+    @Override
+    public User findByNameAndPassword(String name, String password) {
+        UserProfile user = userRespository.findByName(name);
+        handleUserNotFound(user);
+        if(!user.getPassword().equals(password)){
+            throw new PasswordValidationExpection("Password Not Right");
         }
         return userTranslator.translateToDomain(user);
     }
@@ -56,9 +63,10 @@ public class SearchUserServiceImpl implements SearchUserService {
         throw new InvalidParameterException("Insufficient search parameters");
     }
 
+
     private void handleUserNotFound(UserProfile user) {
         if(user ==null){
-            throw new UserNotExistException(format(USER_NOT_FOUND_BY_PARAMS_ERROR_MESSAGE));
+            throw new UserNotExistException(format(USER_NOT_FOUND_ERROR_MESSAGE));
         }
     }
 }

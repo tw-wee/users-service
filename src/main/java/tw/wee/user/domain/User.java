@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.LocalDate;
 import tw.wee.user.enumeration.Gender;
+import tw.wee.user.enumeration.RoleType;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
@@ -27,19 +28,23 @@ public class User {
     private String password;
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate birth;
+
     private Gender gender;
     @Max(value = 11)@Min(value = 11)
     private String mobile;
 
     private Boolean disactiveIndicator;
+    @NotBlank
+    private RoleType role;
 
     public User() {
     }
 
-    public User(String name, String email, String password) {
+    public User(String name, String email, String password, RoleType role) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     public Integer getUserId() {
@@ -104,5 +109,13 @@ public class User {
 
     public void setDisactiveIndicator(Boolean disactiveIndicator) {
         this.disactiveIndicator = disactiveIndicator;
+    }
+
+    public RoleType getRole() {
+        return role;
+    }
+
+    public void setRole(RoleType role) {
+        this.role = role;
     }
 }

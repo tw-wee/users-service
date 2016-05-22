@@ -26,7 +26,7 @@ public class AddMaintainUserController {
     private AddUserService addUserService;
 
     @RequestMapping(method = RequestMethod.POST)
-    @ApiOperation(value = "Create a user", notes = "Create a User in user-service")
+    @ApiOperation(value = "Create user", notes = "Create a User in user-service")
     @ResponseStatus(value = CREATED)
     public ResponseEntity addUser(@RequestBody @Valid User user, BindingResult bindingResult){
         rejectInvalidUser(bindingResult);

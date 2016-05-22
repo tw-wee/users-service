@@ -35,16 +35,20 @@ public class UserProfile {
     @Column(name = "DISACTIVE_FLAG")
     private Character disacitveIndicator;
 
+    @Column(name = "ROLE")
+    private String role;
+
     public UserProfile() {
     }
 
-    public UserProfile(Integer userId, String name, String email, String password, LocalDate birth, String gender) {
+    public UserProfile(Integer userId, String name, String email, String password, LocalDate birth, String gender, String role) {
         this.userId = userId;
         this.name = name;
         this.email = email;
         this.password = password;
         this.birth = birth;
         this.gender = gender;
+        this.role = role;
     }
 
     public Integer getUserId() {
@@ -109,5 +113,13 @@ public class UserProfile {
 
     public void setDisacitveIndicator(Character disacitveIndicator) {
         this.disacitveIndicator = disacitveIndicator;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
